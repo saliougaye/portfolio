@@ -1,0 +1,18 @@
+{
+    "workspaces": {
+        "apps/cms": {
+            "entry": "*.ts",
+            "project": "**/*.ts",
+            "ignore": [
+                "node_modules"
+            ]
+        },
+        "apps/portfolio": {
+            "entry": "*.ts",
+            "project": "**/*.ts",
+            "ignore": [
+                "node_modules"
+            ]
+        }
+    }
+}
