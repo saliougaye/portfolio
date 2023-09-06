@@ -77,7 +77,7 @@ const people: DocumentDefinition = {
         },
         {
             name: 'presentation',
-            type: 'string',
+            type: 'text',
             title: 'Presentation',
             description: 'A small presentation about you',
             group: 'general',

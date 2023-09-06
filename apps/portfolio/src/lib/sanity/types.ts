@@ -30,7 +30,22 @@ export interface RawInformation extends BaseRawDocument {
     profileImage: BaseRawImage;
 }
 
+export interface RawProject extends BaseRawDocument {
+    category: string;
+    new: boolean;
+    url?: string;
+    person_ref: {
+        _ref: string;
+        _type: 'reference';
+    };
+    name: string;
+    image: BaseRawImage;
+    description: string;
+    tag: string;
+}
+
 export interface Information {
+    id: string;
     name: string;
     presentation: string;
     role: string;
@@ -38,4 +53,15 @@ export interface Information {
     contact: string;
     github: string;
     linkedin: string;
+}
+
+export interface Project {
+    id: string;
+    name: string;
+    category: string;
+    url: string;
+    new: boolean;
+    imageUrl: string;
+    description: string;
+    tag: string;
 }

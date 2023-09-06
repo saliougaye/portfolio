@@ -1,16 +1,11 @@
 import {useSanityClient} from '@sanity/astro';
-import {getInformationQuery} from './queries';
-import type {RawInformation} from './types';
-import {mapInformation} from './utils';
+import {getInformationQuery, getLatestProjects, getProjects} from './queries';
+import type {Project, RawInformation, RawProject} from './types';
+import {mapInformation, mapProject} from './utils';
 
 export const sanity = {
     getInformation: async (id: string) => {
         const client = useSanityClient();
-
-        if (!client) {
-            console.log('non work');
-            return;
-        }
 
         const rawInformation = await client.fetch<RawInformation>(
             getInformationQuery,
@@ -20,5 +15,37 @@ export const sanity = {
         const information = mapInformation(rawInformation, client);
 
         return information;
+    },
+    getLatestProjects: async (personRef: string) => {
+        const client = useSanityClient();
+
+        const rawProjects = await client.fetch<RawProject[]>(
+            getLatestProjects,
+            {personId: personRef}
+        );
+
+        const latestProjects = rawProjects.map((el) => mapProject(el, client));
+
+        return latestProjects;
+    },
+    getProjects: async (personRef: string) => {
+        const client = useSanityClient();
+        const rawProjects = await client.fetch<RawProject[]>(getProjects, {
+            personId: personRef,
+        });
+
+        const projects = rawProjects.map((el) => mapProject(el, client));
+
+        const grouped = projects.reduce<Record<string, Project[]>>(
+            (acc, curr) => {
+                return {
+                    ...acc,
+                    [curr.category]: [...(acc[curr.category] ?? []), curr],
+                };
+            },
+            {}
+        );
+
+        return grouped;
     },
 };
