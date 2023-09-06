@@ -1,19 +1,25 @@
 import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
 import tailwind from "@astrojs/tailwind";
-
-// https://astro.build/config
+import sanity from '@sanity/astro'
+import { loadEnv } from "vite";
 import image from "@astrojs/image";
 
-// https://astro.build/config
+const env = loadEnv(process.env.NODE_ENV, process.cwd(), "")
+
 export default defineConfig({
   site: 'https://astrofy-template.netlify.app',
-  integrations: [mdx(), sitemap(), tailwind(), image(
-    {
-      serviceEntryPoint: '@astrojs/image/sharp',
-      cacheDir: "./.cache/image",
-      logLevel: 'debug',
-    }
-  )]
+  integrations: [
+    tailwind(),
+    image(
+      {
+        serviceEntryPoint: '@astrojs/image/sharp',
+        cacheDir: "./.cache/image",
+        logLevel: 'debug',
+      },
+    ),
+    sanity({
+      projectId: env.SANITY_PROJECT_ID,
+      dataset: env.SANITY_DATASET,
+      useCdn: false
+    })]
 });

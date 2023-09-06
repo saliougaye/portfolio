@@ -2,7 +2,9 @@
 import SideBarFooter from "./SideBarFooter.astro";
 import { Image } from "@astrojs/image/components";
 import SideBarMenu from "./SideBarMenu.astro";
+import { sanity } from '../lib/sanity';
 const { sideBarActiveItemID } = Astro.props;
+const information = await sanity.getInformation("saliougaye")
 ---
 
 <div class="drawer-side z-40">
@@ -12,12 +14,12 @@ const { sideBarActiveItemID } = Astro.props;
       <a href="/">
         <div class="avatar transition ease-in-out hover:scale-[102%] block m-auto">
           <div class="w-[8.5rem]">
-            <Image class="mask mask-circle" aspectRatio="1:1" format="webp" width={300} height={300} src="/profile.jpeg" alt="Profile image" />
+            <Image class="mask mask-circle" aspectRatio="1:1" format="webp" width={300} height={300} src={information?.proPicUrl ?? ''} alt="Profile image" />
           </div>
         </div>
       </a>
     </div>
     <SideBarMenu sideBarActiveItemID={sideBarActiveItemID} />
-    <SideBarFooter />
+    <SideBarFooter linkedin={information?.linkedin} github={information?.github} />
   </aside>
 </div>
