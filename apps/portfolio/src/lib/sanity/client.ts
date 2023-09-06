@@ -1,7 +1,12 @@
 import {useSanityClient} from '@sanity/astro';
-import {getInformationQuery, getLatestProjects, getProjects} from './queries';
-import type {Project, RawInformation, RawProject} from './types';
-import {mapInformation, mapProject} from './utils';
+import {
+    getCv,
+    getInformationQuery,
+    getLatestProjects,
+    getProjects,
+} from './queries';
+import type {Project, RawCv, RawInformation, RawProject} from './types';
+import {mapCv, mapInformation, mapProject} from './utils';
 
 export const sanity = {
     getInformation: async (id: string) => {
@@ -47,5 +52,14 @@ export const sanity = {
         );
 
         return grouped;
+    },
+    getCv: async (personRef: string) => {
+        const client = useSanityClient();
+
+        const rawCv = await client.fetch<RawCv>(getCv, {personId: personRef});
+
+        const cv = mapCv(rawCv);
+
+        return cv;
     },
 };

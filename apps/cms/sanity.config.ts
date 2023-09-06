@@ -8,7 +8,7 @@ export default defineConfig({
     name: 'default',
     title: 'Portfolio CMS',
 
-    projectId: 'rr4o1kpu',
+    projectId: import.meta.env.SANITY_STUDIO_PROJECT_ID,
     dataset: 'production',
 
     plugins: [deskTool(), visionTool(), unsplashImageAsset()],

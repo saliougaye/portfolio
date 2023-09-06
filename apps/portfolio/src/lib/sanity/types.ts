@@ -44,6 +44,41 @@ export interface RawProject extends BaseRawDocument {
     tag: string;
 }
 
+export interface RawCv extends BaseRawDocument {
+    _type: 'cvs';
+    person_ref: {
+        _ref: string;
+        _type: 'reference';
+    };
+    profile: string;
+    skills: string[];
+    educations: {
+        endedAt: string;
+        _type: 'education';
+        description: string;
+        startedAt: string;
+        place: string;
+        _key: string;
+        title: string;
+        city: string;
+    }[];
+    experiences: {
+        _type: 'workExperience';
+        _key: string;
+        startedAt: string;
+        endedAt: string;
+        description: string;
+        company: string;
+        title: string;
+        city: string;
+        website: string;
+    }[];
+    certificationts: {
+        name: string;
+        link: string;
+    }[];
+}
+
 export interface Information {
     id: string;
     name: string;
@@ -64,4 +99,33 @@ export interface Project {
     imageUrl: string;
     description: string;
     tag: string;
+}
+
+export interface CV {
+    id: string;
+    skills: string[];
+    profile: string;
+    educations: {
+        key: string;
+        title: string;
+        startedAt: string;
+        endedAt: string;
+        description: string;
+        place: string;
+        city: string;
+    }[];
+    experiences: {
+        key: string;
+        title: string;
+        startedAt: string;
+        endedAt: string;
+        description: string;
+        company: string;
+        city: string;
+        website?: string;
+    }[];
+    certifications: {
+        name: string;
+        link?: string;
+    }[];
 }

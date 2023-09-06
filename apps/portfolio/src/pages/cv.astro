@@ -1,6 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import TimeLineElement from "../components/cv/TimeLine.astro";
+import { sanity } from '../lib/sanity';
+
+const information = await sanity.getInformation("saliougaye");
+const cv = await sanity.getCv(information.id);
+
 ---
 
 <!-- TODO fetch from CMS -->
@@ -10,11 +15,7 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
   </div>
 
   <div class="mb-10 text-justify">
-    I am an Italian-Senegalese boy, who since childhood, loved technology and computer. I learned how to program
-  and troubleshoot PC on my own to then have an extra boost by doing ITIS Computer Science articulation in
-  Vittorio Veneto(Treviso, Italy). Beyond programming, basketball has been also important in my life, and I am still
-  passionate about it.I can work quite well in a team trying to intervene also in tense moments between the group.
-  In every job I do, I always give 100%, because in my opinion you need to earn things loyally and willingly to do.
+    {cv.profile}
   </div>
 
   <div class="mb-5">
@@ -22,14 +23,17 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
   </div>
 
   <div class="time-line-container grid gap-4 mb-10">
-    <TimeLineElement
-      title="Title Name"
-      subtitle="[start year] to [end year] at [Study Center Name], [City], [Country]"
-    />
-    <TimeLineElement
-      title="Title Name"
-      subtitle="[start year] to [end year] at [Study Center Name], [City], [Country]"
-    />
+    {
+      cv.educations.map(el => (
+        <TimeLineElement
+          title={el.title}
+          subtitle={`${el.startedAt} to ${el.endedAt ?? 'now'} at ${el.place}, ${el.city}`}
+          key={el.key}
+        >
+        {el.description}
+        </TimeLineElement>
+      ))
+    }
   </div>
 
   <div class="mb-5">
@@ -37,24 +41,17 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
   </div>
 
   <div class="time-line-container mb-10">
-    <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
-    >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-    </TimeLineElement>
-    <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
-    >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-    </TimeLineElement>
-    <TimeLineElement
-      title="Job Title at Project or Company Name"
-      subtitle="From [Start Date] to [End Date] at [Company], [City], [Country]"
-    >
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
-    </TimeLineElement>
+    {
+      cv.experiences.map(el => (
+      <TimeLineElement
+          title={el.title}
+          subtitle={`From ${el.startedAt} to ${el.endedAt ?? 'now'} at ${el.company}, ${el.city}`}
+          key={el.key}
+        >
+        {el.description}
+        </TimeLineElement>
+      ))
+    }
   </div>
 
   <div class="mb-5">
@@ -62,12 +59,13 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
   </div>
 
   <ul class="list-disc mx-6 mb-10 grid gap-2">
-    <li>
-      <a href="#" target="_blank"> Certification Name (with link)</a>
-    </li>
-    <li>
-      <a href="#" target="_blank"> Certification Name (with link)</a>
-    </li>
+    {
+      cv.certifications.map(el => (
+      <li>
+        <a href={el.link ?? '#'} target="_blank">{el.name}</a>
+      </li>
+      ))
+    }
   </ul>
 
   <div class="mb-5">
@@ -75,20 +73,10 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
   </div>
 
   <ul class="list-disc md:columns-5 columns-2 mx-6">
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
-    <li>Skill Name</li>
+    {
+      cv.skills.map(el => (
+      <li>{el}</li>
+      ))
+    }
   </ul>
 </BaseLayout>

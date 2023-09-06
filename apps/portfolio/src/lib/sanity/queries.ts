@@ -6,3 +6,5 @@ export const getLatestProjects =
 
 export const getProjects =
     '*[_type == "projects" && person_ref._ref == $personId]';
+
+export const getCv = '*[_type == "cvs" && person_ref._ref == $personId][0]';
