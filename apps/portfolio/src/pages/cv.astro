@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import TimeLineElement from "../components/cv/TimeLine.astro";
 import { sanity } from '../lib/sanity';
 
-const information = await sanity.getInformation("saliougaye");
+const information = await sanity.getInformation(import.meta.env.PERSON_SLUG);
 const cv = await sanity.getCv(information.id);
 
 ---

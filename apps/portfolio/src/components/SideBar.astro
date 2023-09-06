@@ -4,7 +4,7 @@ import { Image } from "@astrojs/image/components";
 import SideBarMenu from "./SideBarMenu.astro";
 import { sanity } from '../lib/sanity';
 const { sideBarActiveItemID } = Astro.props;
-const information = await sanity.getInformation("saliougaye")
+const information = await sanity.getInformation(import.meta.env.PERSON_SLUG)
 ---
 
 <div class="drawer-side z-40">

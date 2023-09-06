@@ -4,7 +4,7 @@ import HorizontalCard from "../components/HorizontalCard.astro";
 import { sanity } from '../lib/sanity';
 
 
-const information = await sanity.getInformation("saliougaye");
+const information = await sanity.getInformation(import.meta.env.PERSON_SLUG);
 const projects = await sanity.getProjects(information.id);
 
 ---

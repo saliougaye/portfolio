@@ -1,10 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "@astrojs/image/components";
 ---
 
 <BaseLayout title = "404: Not Found" includeSidebar={false}>
   <div class="text-center">
-    <h1 class="text-9xl font-bold mb-4">🏝</h1>
+    <Image
+        src="/404.png"
+        width={1000}
+        height={1000}
+        format="webp"
+        alt='404'
+        class="md:max-w-[12rem] rounded-lg mx-auto"
+      />
     <h1 class="text-9xl font-bold mb-2">404</h1>
     <h3 class="text-2xl">The page you're looking for couldn't be found.</h3>
     <a class="btn btn-accent mt-9" href="/">Home</a>
